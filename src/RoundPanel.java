@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Window;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
@@ -8,13 +9,16 @@ import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class RoundPanel extends JPanel implements MouseListener{
 	
 	String Playername;
 	int Playerlevel;
 	int nhood;
+	boolean isCompleted = false;
 	Random random = new Random();
 	
 	static final int SCREEN_WIDTH = 1800;
@@ -27,6 +31,7 @@ public class RoundPanel extends JPanel implements MouseListener{
 	int bubbleY = 1*UNIT_SIZE;
 	int round;
 	bub bubbles[];
+	tempBub tempbubbles[];
 	int i=0;
 	int Score;
 	
@@ -37,13 +42,16 @@ public class RoundPanel extends JPanel implements MouseListener{
 		nhood = R;
 		Score = Playerlevel + 4;
 		bubbles = new bub[Playerlevel+4];
-		for(int j=0;j<Playerlevel+4;j++)
+		tempbubbles = new tempBub[Playerlevel+4];
+		for(int j=0;j<Playerlevel+4;j++) {
 			bubbles[j] = new bub();
+			tempbubbles[j] = new tempBub();
+		}
 		setBounds(50, 200, 1800, 750);
 		setBackground(new Color(0x696969));
 		addMouseListener(this);
 		setVisible(true);
-		drawBubbles(0, 0, (int)(SCREEN_WIDTH/UNIT_SIZE), (int)(SCREEN_HEIGHT/UNIT_SIZE));
+		drawBubbles(0, 0, (int)(SCREEN_WIDTH/UNIT_SIZE)-1, (int)(SCREEN_HEIGHT/UNIT_SIZE)-1);
 		
 		//Local Hopping
 		Timer timer = new Timer();
@@ -62,19 +70,20 @@ public class RoundPanel extends JPanel implements MouseListener{
 						nmx = 0;
 					if(nmy < 0)
 						nmy = 0;
-					if(NMX > 36)
-						NMX = 36;
-					if(NMY > 36)
-						NMY = 36;
+					if(NMX > 35)
+						NMX = 35;
+					if(NMY > 14)
+						NMY = 14;
 					i = ii;
-					gen(nmx, nmy, NMX, NMY);
-					repaint();
+					removemouse();
+					generate(nmx, nmy, NMX, NMY);
+					addmouse();
 				}
 				
 			}
 			
 		};
-		timer.scheduleAtFixedRate(task, 0, 1000);
+		timer.scheduleAtFixedRate(task, 0, 2000);
 		
 	}
 	
@@ -83,18 +92,26 @@ public class RoundPanel extends JPanel implements MouseListener{
 		draw(g);
 	}
 	
+	public void removemouse() {
+		removeMouseListener(this);
+	}
+	public void addmouse() {
+		this.addMouseListener(this);
+	}
+	
 	public void draw(Graphics g) {
 		
-		for(int j=0;j<SCREEN_HEIGHT/UNIT_SIZE;j++)
+		/*for(int j=0;j<SCREEN_HEIGHT/UNIT_SIZE;j++)
 			g.drawLine(0, j*UNIT_SIZE, SCREEN_WIDTH, j*UNIT_SIZE);
 		for(int j=0;j<SCREEN_WIDTH/UNIT_SIZE;j++)
-			g.drawLine(j*UNIT_SIZE, 0, j*UNIT_SIZE, SCREEN_HEIGHT);
+			g.drawLine(j*UNIT_SIZE, 0, j*UNIT_SIZE, SCREEN_HEIGHT);*/
 		
 		int l=Playerlevel + 4-1;
+		g.setColor(new Color(0x87CEEB));
 		for(;l>=0;l--) {
-			g.setColor(new Color(0x87CEEB));
-			if(bubbles[l].isBurst!=1)
-				g.fillOval(bubbles[l].Xpos, bubbles[l].Ypos, UNIT_SIZE, UNIT_SIZE);
+			if(bubbles[l].isBurst!=1) {
+				g.fillOval(tempbubbles[l].Xpos, tempbubbles[l].Ypos, UNIT_SIZE, UNIT_SIZE);
+			}
 		}
 		
 	}
@@ -114,15 +131,29 @@ public class RoundPanel extends JPanel implements MouseListener{
 	}
 	
 	public void gen(int mx, int my, int MX, int MY) {
-		bubbleX = ThreadLocalRandom.current().nextInt(mx, MX ) * UNIT_SIZE;
-		bubbleY = ThreadLocalRandom.current().nextInt(my, MY ) * UNIT_SIZE;
+		bubbleX = ThreadLocalRandom.current().nextInt(mx, MX +1) * UNIT_SIZE;
+		bubbleY = ThreadLocalRandom.current().nextInt(my, MY +1) * UNIT_SIZE;
+		
 		if(bubbles[i].isBurst != 1) {
+			tempbubbles[i].changeloc(bubbleX, bubbleY);
 			bubbles[i].changeloc(bubbleX, bubbleY);
-			System.out.println(bubbles[i].Xpos);
-			System.out.println(bubbles[i].Ypos);
+			//System.out.println(bubbles[i].Xpos);
+			//System.out.println(bubbles[i].Ypos);
 		}
 	}
 	
+	public void generate(int mx, int my, int MX, int MY) {
+		bubbleX = ThreadLocalRandom.current().nextInt(mx, MX +1) * UNIT_SIZE;
+		bubbleY = ThreadLocalRandom.current().nextInt(my, MY +1) * UNIT_SIZE;
+		
+		if(bubbles[i].isBurst != 1) {
+			tempbubbles[i].changeloc(bubbleX, bubbleY);
+			repaint();
+			bubbles[i].changeloc(bubbleX, bubbleY);
+			//System.out.println(bubbles[i].Xpos);
+			//System.out.println(bubbles[i].Ypos);
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -140,8 +171,15 @@ public class RoundPanel extends JPanel implements MouseListener{
 					bubbles[p].changeloc(-1, -1);
 					Score--;
 					if(Score==0) {
-						System.out.println("You won this round!");
-						//open next round
+						if(round==10) {
+							backtomain();
+							JOptionPane.showMessageDialog(null, "Congratulations! YOU WON " + Playername, "Bubble Burst Winner!", JOptionPane.INFORMATION_MESSAGE);
+						}
+						//System.out.println("You won this round!");
+						else {
+							backtomain();
+							new RoundFrame(Playername, Playerlevel,round+1);
+						}
 					}
 					
 					flag = true;
@@ -151,9 +189,16 @@ public class RoundPanel extends JPanel implements MouseListener{
 		}
 		if(flag==false) {
 			System.out.println("Game Over bro!");
-			//close all frames except main frame
+			backtomain();
+			JOptionPane.showMessageDialog(null, "GAME OVER!", "Round: " + round +"GAME OVER!", JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	public void backtomain() {
+		isCompleted = true;
+		Window x = SwingUtilities.getWindowAncestor(this);
+		x.dispose();
 	}
 
 	@Override

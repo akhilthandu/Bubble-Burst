@@ -15,9 +15,15 @@ public class TimerPanel extends JPanel{
 	String toime = "Sec";
 	int toimeX = 1652;
 	int toimeY = 52;
-	int counter=60;
+	int counter=20;
+	int round;
+	boolean flag  = false;
 	
-	TimerPanel(){
+	TimerPanel(int R){
+		
+		round = R;
+		counter = counter - round;
+		
 		setBounds(1650, 50, 200, 50);
 		setBackground(new Color(0xD9D9D9));
 		setVisible(true);
@@ -29,6 +35,9 @@ public class TimerPanel extends JPanel{
 			public void run() {
 				
 				if(counter>0) {
+					if(flag==true) {
+						timer.cancel();
+					}
 					
 					String s = Integer.toString(counter) + " sec";
 					toime = s;
@@ -52,6 +61,10 @@ public class TimerPanel extends JPanel{
 	public void backtomain() {
 		Window x = SwingUtilities.getWindowAncestor(this);
 		x.dispose();
+	}
+	
+	public void checkflag(boolean b) {
+		flag = b;
 	}
 	
 	public void paintComponent(Graphics g) {

@@ -1,10 +1,10 @@
 
-public class bub {
+public class tempBub {
 	int Xpos;
 	int Ypos;
 	int isBurst;
 	
-	bub(){
+	tempBub(){
 		Xpos = -1;
 		Ypos = -1;
 		isBurst = 2;
@@ -18,4 +18,5 @@ public class bub {
 		else
 			isBurst = 0;
 	}
+
 }
