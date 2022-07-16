@@ -12,9 +12,9 @@ public class Playingfield extends JPanel implements MouseListener{
 	String Playername;
 	int Playerlevel;
 	
-	static final int SCREEN_WIDTH = 1800;
-	static final int SCREEN_HEIGHT = 750;
-	static final int UNIT_SIZE = 50;
+	static final int SCREEN_WIDTH = 1000;
+	static final int SCREEN_HEIGHT = 480;
+	static final int UNIT_SIZE = 40;
 	static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
 	final int x[] = new int [GAME_UNITS];
 	final int y[] = new int [GAME_UNITS];
@@ -27,8 +27,8 @@ public class Playingfield extends JPanel implements MouseListener{
 		Playername = name;
 		Playerlevel = level;
 		rempoi = level+4;
-		setBounds(50, 200, 1800, 750);
-		setBackground(new Color(0x696969));
+		setBounds(30, 100, SCREEN_WIDTH, SCREEN_HEIGHT);
+		setBackground(new Color(0x1C4670));
 		addMouseListener(this);
 		setVisible(true);
 	}
@@ -48,7 +48,7 @@ public class Playingfield extends JPanel implements MouseListener{
 	}
 	
 	public void drawBubble(Graphics g) {
-		g.setColor(new Color(0x87CEEB));
+		g.setColor(new Color(0x278AB0));
 		g.fillOval(bubbleX, bubbleY, UNIT_SIZE, UNIT_SIZE);
 	}
 	

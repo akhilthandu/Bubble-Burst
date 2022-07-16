@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 public class TimerPanel extends JPanel{
 	
 	String toime = "Sec";
-	int toimeX = 1652;
+	int toimeX = 882;
 	int toimeY = 52;
 	int counter=20;
 	int round;
@@ -24,8 +24,8 @@ public class TimerPanel extends JPanel{
 		round = R;
 		counter = counter - round;
 		
-		setBounds(1650, 50, 200, 50);
-		setBackground(new Color(0xD9D9D9));
+		setBounds(880, 50, 150, 50);
+		setBackground(new Color(0x000000));
 		setVisible(true);
 		
 		Timer timer = new Timer();
@@ -73,9 +73,9 @@ public class TimerPanel extends JPanel{
 	}
 	
 	public void drawTimer(Graphics g) {
-		g.setColor(new Color(0x000000));
-		g.setFont(new Font("Product Sans", Font.BOLD, 30));
-		g.drawString(toime, 60, 40);
+		g.setColor(new Color(0xEAEAE0));
+		g.setFont(new Font("Product Sans", Font.BOLD, 28));
+		g.drawString(toime, 40, 30);
 	}
 
 }

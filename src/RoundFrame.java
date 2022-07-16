@@ -24,9 +24,9 @@ public class RoundFrame extends JFrame{
 		setLayout(null);
 		
 		JLabel rounddisplayer = new JLabel();
-		rounddisplayer.setBounds(50,50,800,50);
-		rounddisplayer.setFont(new Font("Product Sans", Font.BOLD, 50));
-		rounddisplayer.setForeground(new Color(0xFAF9F6));
+		rounddisplayer.setBounds(30,60,500,30);
+		rounddisplayer.setFont(new Font("Product Sans", Font.BOLD, 35));
+		rounddisplayer.setForeground(new Color(0x1DC690));
 		rounddisplayer.setText(Playername + " - " + " Round " + round);
 		add(rounddisplayer);
 		
@@ -37,8 +37,8 @@ public class RoundFrame extends JFrame{
 		add(tp);
 		
 		setTitle("Bubble Burst Round 1");
-		setSize(1920, 1080);
-		getContentPane().setBackground(new Color(0x000000));
+		setSize(1080, 720);
+		getContentPane().setBackground(new Color(0xEAEAE0));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
