@@ -21,9 +21,9 @@ public class RoundPanel extends JPanel implements MouseListener{
 	boolean isCompleted = false;
 	Random random = new Random();
 	
-	static final int SCREEN_WIDTH = 1800;
-	static final int SCREEN_HEIGHT = 750;
-	static final int UNIT_SIZE = 50;
+	static final int SCREEN_WIDTH = 1000;
+	static final int SCREEN_HEIGHT = 480;
+	static final int UNIT_SIZE = 40;
 	static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
 	final int x[] = new int [GAME_UNITS];
 	final int y[] = new int [GAME_UNITS];
@@ -47,8 +47,8 @@ public class RoundPanel extends JPanel implements MouseListener{
 			bubbles[j] = new bub();
 			tempbubbles[j] = new tempBub();
 		}
-		setBounds(50, 200, 1800, 750);
-		setBackground(new Color(0x696969));
+		setBounds(30, 100, SCREEN_WIDTH, SCREEN_HEIGHT);
+		setBackground(new Color(0x1C4670));
 		addMouseListener(this);
 		setVisible(true);
 		drawBubbles(0, 0, (int)(SCREEN_WIDTH/UNIT_SIZE)-1, (int)(SCREEN_HEIGHT/UNIT_SIZE)-1);
@@ -70,10 +70,10 @@ public class RoundPanel extends JPanel implements MouseListener{
 						nmx = 0;
 					if(nmy < 0)
 						nmy = 0;
-					if(NMX > 35)
-						NMX = 35;
-					if(NMY > 14)
-						NMY = 14;
+					if(NMX > 24)
+						NMX = 24;
+					if(NMY > 11)
+						NMY = 11;
 					i = ii;
 					removemouse();
 					generate(nmx, nmy, NMX, NMY);
@@ -107,7 +107,7 @@ public class RoundPanel extends JPanel implements MouseListener{
 			g.drawLine(j*UNIT_SIZE, 0, j*UNIT_SIZE, SCREEN_HEIGHT);*/
 		
 		int l=Playerlevel + 4-1;
-		g.setColor(new Color(0x87CEEB));
+		g.setColor(new Color(0x278AB0));
 		for(;l>=0;l--) {
 			if(bubbles[l].isBurst!=1) {
 				g.fillOval(tempbubbles[l].Xpos, tempbubbles[l].Ypos, UNIT_SIZE, UNIT_SIZE);
@@ -117,8 +117,8 @@ public class RoundPanel extends JPanel implements MouseListener{
 	}
 	
 	public void paintpanelcol(Graphics g, int xx, int yy) {
-		g.setColor(new Color(0x696969));
-		g.fillOval(xx, yy, 50, 50);
+		g.setColor(new Color(0x1C4670));
+		g.fillOval(xx, yy, UNIT_SIZE, UNIT_SIZE);
 	}
 	
 	public void drawBubbles(int mx, int my, int MX, int MY) {

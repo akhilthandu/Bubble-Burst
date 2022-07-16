@@ -22,27 +22,27 @@ public class FirstFrame extends JFrame implements ActionListener, ChangeListener
 		JLabel title = new JLabel("BUBBLE BURST");
 		title.setBounds(350,20,400,80);
 		title.setFont(new Font("Product Sans", Font.BOLD, 50));
-		title.setForeground(new Color(0xFAF9F6));
+		title.setForeground(new Color(0x1C4670));
 		add(title);
 		
 		JLabel enter = new JLabel("Enter Player Name");
 		enter.setBounds(400, 150, 400, 80);
 		enter.setFont(new Font("Product Sans", Font.PLAIN, 30));
-		enter.setForeground(new Color(0xFAF9F6));
+		enter.setForeground(new Color(0x1C4670));
 		add(enter);
 		
 		inputbox = new JTextField();
 		inputbox.setBounds(400, 250, 250, 50);
 		inputbox.setText("NoobMaster69");
-		inputbox.setBackground(new Color(0x696969));
-		inputbox.setForeground(new Color(0xFAF9F6));
+		inputbox.setBackground(new Color(0x1DC690));
+		inputbox.setForeground(new Color(0x278AB0));
 		inputbox.setFont(new Font("Product Sans", Font.ITALIC, 30));
 		inputbox.setHorizontalAlignment(JTextField.CENTER);
 		add(inputbox);
 		
 		difficulty = new JSlider(0,2,0);
 		difficulty.setBounds(350, 350, 350, 50);
-		difficulty.setBackground(Color.black);
+		difficulty.setBackground(new Color(0xEAEAE0));
 		Hashtable<Integer, JLabel> labelTable = 
 			      new Hashtable<Integer, JLabel>();
 			      labelTable.put(0, new JLabel("Easy") );
@@ -56,6 +56,8 @@ public class FirstFrame extends JFrame implements ActionListener, ChangeListener
 		
 		startbutton = new JButton("Start Game");
 		startbutton.setBounds(250, 450, 250, 50);
+		startbutton.setBackground(new Color(0x1DC690));
+		startbutton.setForeground(new Color(0x000000));
 		startbutton.setFont(new Font("Product Sans", Font.PLAIN, 22));
 		startbutton.setFocusable(false);
 		startbutton.addActionListener(this);
@@ -63,6 +65,8 @@ public class FirstFrame extends JFrame implements ActionListener, ChangeListener
 		
 		restartbutton = new JButton("Restart Game");
 		restartbutton.setBounds(550, 450, 250, 50);
+		restartbutton.setBackground(new Color(0x1C4670));
+		restartbutton.setForeground(new Color(0xEAEAE0));
 		restartbutton.setFont(new Font("Product Sans", Font.PLAIN, 22));
 		restartbutton.setFocusable(false);
 		restartbutton.addActionListener(this);
@@ -71,7 +75,7 @@ public class FirstFrame extends JFrame implements ActionListener, ChangeListener
 		
 		setTitle("Bubble Burst");
 		setSize(1080, 720);
-		getContentPane().setBackground(Color.black);
+		getContentPane().setBackground(new Color(0xEAEAE0));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
